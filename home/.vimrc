@@ -107,7 +107,7 @@
 
 
 " Section: matchit
-  :source ~/.vim/plugin/matchit.vim
+"  :source ~/.vim/plugin/matchit.vim
 
 " Section: bufexplorer
   
