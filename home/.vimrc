@@ -64,7 +64,6 @@ set exrc                       " Pick up local vimrc files
 
  " ...
 
- filetype plugin indent on     " required! (by vundle?) 
  "
  " Brief help
  " :BundleList          - list configured bundles
@@ -76,7 +75,7 @@ set exrc                       " Pick up local vimrc files
  " NOTE: comments after Bundle command are not allowed..
 
  
-" " Section: configuration
+" " Section: colors
 "
 syntax enable
 if has('gui_running')
@@ -87,22 +86,32 @@ endif
 let g:solarized_termcolors=256
 colorscheme solarized
 " Default color scheme
-" color desert
+color desert
 
-" " Swap
+"" Swap
 set nobackup
 set noswapfile
-" Directories for swp files
+"" Directories for swp files
 "set backupdir=~/.vim/backup
 "set directory=~/.vim/backup
 
-" NERDTree configuration
+
+"" Section: Bundle Config
+"" NERDTree configuration
 let NERDTreeIgnore=['\.pyc$', '\.rbc$', '\~$']
 map <Leader>n :NERDTreeToggle<CR>
 
-" remove all trailing spaces
-au BufWrite *.{coffee,css,erb,haml,js,Rakefile,rb,ru,sass,scss} %s/\s\+$//e
+"" CommandT config
+augroup CommandTExtension
+  autocmd!
+  autocmd FocusGained * CommandTFlush
+  autocmd BufWritePost * CommandTFlush
+augroup END
 
+" Section: File Types
+
+filetype plugin indent on     " required! (by vundle?) 
+ 
 " Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
 au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru}    set ft=ruby
 
@@ -114,8 +123,32 @@ au BufNewFile,BufRead *.json set ft=javascript
 
 "au BufRead,BufNewFile *.txt call s:setupWrapping()
 
+" Section: Whitespace stuff
+set nowrap
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set expandtab
+set list listchars=tab:\ \ ,trail:·
+"" remove all trailing spaces
+au BufWrite *.{coffee,css,erb,haml,js,Rakefile,rb,ru,sass,scss} %s/\s\+$//e
+au BufWrite Gemfile %s/\s\+$//e
 
-" Section: bindings
+
+" Searching
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+
+" Tab completion
+set wildmode=list:longest,list:full
+set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*
+
+" Spell checking
+:setlocal spell spelllang=en_us
+
+" Section: Key bindings
 
     " Set the leader to , instead of \
     let mapleader = ","
@@ -133,7 +166,7 @@ au BufNewFile,BufRead *.json set ft=javascript
     imap <D-/> <C-O>,c<space>
 
 
-" Status bar
+" Section: Status bar
 set laststatus=2
 "" see:
 "    http://got-ravings.blogspot.com/2008/08/vim-pr0n-making-statuslines-that-own.html
@@ -197,29 +230,12 @@ set statusline+=\ %P                   "percentage thru buffer
 " set statusline +=%2*0x%04B\ %*          "character under cursor
 
 
+" Section: Visual stuff
+set number " show line number
+
 " " Section: old configuration
 "" set encoding=utf-8
 "" 
-"" " Whitespace stuff
-"" set nowrap
-"" set tabstop=2
-"" set shiftwidth=2
-"" set softtabstop=2
-"" set expandtab
-"" set list listchars=tab:\ \ ,trail:·
-"" 
-"" " Searching
-"" set hlsearch
-"" set incsearch
-"" set ignorecase
-"" set smartcase
-"" 
-"" " Tab completion
-"" set wildmode=list:longest,list:full
-"" set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*
-"" 
-"" " Spell checking
-"" :setlocal spell spelllang=en_us
 "" 
 "" " Status bar
 "" set laststatus=2
